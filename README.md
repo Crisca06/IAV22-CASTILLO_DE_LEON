@@ -1,11 +1,187 @@
 # IAV22 Cristian Castillo de León - Proyecto Final
 ### Esta es la documentación para el proyecto final de la asignatura de Inteligencia Artificial para Videojuegos del curso 2021/2022, por Cristian Castillo.
 
-## Propuesta
+## Introducción al Proyecto
 El proyecto final se centra principalmente en un pequeño juego del género de terror y mazmorras, con generación aleatoria de las mismas.
-La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las 7 cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán seguir al jugador en caso de que éste le dé de comer, una vez ganada su confianza, la cabra seguirá al jugador mientras lo vea, pero huirá en caso de encontrarse cerca el demonio durante demasiado tiempo, para lograr todo este comportamiento se hará uso de una máquina de estados. Las cabras seguirán al jugador hasta llegar a la zona de sacrificio dónde se quedarán esperando a estar todas para poder derrotar al demonio, esta zona será inaccesible para el demonio.
+La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las 7 cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán seguir al jugador en caso de que éste le dé de comer, una vez ganada su confianza, la cabra seguirá al jugador mientras lo vea, pero huirá en caso de encontrarse cerca el demonio durante demasiado tiempo, para lograr todo este comportamiento se hará uso de una máquina de estados. Las cabras seguirán al jugador y éstas sacrificarán su sangre para manchar la mazmorra, impidiendo al demonio pasar por dichas zonas. Si dicho demonio llegara a ser encerrado en un circulo o cuadrado de sangre, entonces habrá perdido.
 
-El demonio contará con un árbol de comportamientos que funcionará en función del número de cabras que se encuentren tanto en la zona segura como siguiendo al jugador. En un principio el demonio únicamente divagará por la mazmorra ignorando al jugador pero si éste lleva un número de cabras protegidas o siguiéndole entonces se volverá agresivo y lo perseguirá, el jugador podrá ahuyentarlo utilizando una antorcha, que lo mantendrá alejado un tiempo pero en caso de apagarse la antorcha éste podrá acercarse y las cabras que sigan al jugador huirán y perderán la confianza.
+En un principio el demonio únicamente divagará por la mazmorra ignorando al jugador pero si éste comienza a sacrificar la sangre de las cabras, se dará cuenta de lo que está intentando el jugador y comenzará a alejarse de la zona, evitando así ser atrapado.
 
 Se tiene pensado incluir un desplazamiento en bandada a la hora de juntarse las cabras persiguiendo al jugador.
-En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un generador que permita recrear una mazmorra con un camino accesible desde el principio hasta la zona segura y con caminos adicionales hacia distintas salas donde estarán las cabras y comida. 
+En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un generador que permita recrear una mazmorra con cabras y comida colocadas aleatoriamente.
+
+## Planteamiento
+
+### Demonio
+Será la IA principal del proyecto, pensado como una inteligencia artificial basada en el escape y el evitar ser atrapado por la sangre de las cabras. Para ello se hará uso del conocido algoritmo de A* que permitirá al demonio elegir el camino más óptimo a la hora de llegar a una zona. La manera en la que el demonio eligirá a dónde ir se basará en un mapa de influencia que cambiará de forma dinámica dependiendo de las zonas marcadas por sangre.
+
+### A*
+El algoritmo de A* se puede plantear sobre una matriz de celdas. Este algoritmo destaca por su rendimiento, precisión y facilidad de implementación. Se parte de la base de que los agentes que lo navegan conocen de antemano la disposición de los obstáculos y los costes de cada casilla del mapa, en el caso de este proyecto, los costes de las casillas cambiarán de forma dinámica con la sangre colocada sobre el mapa. 
+
+Aunque tiene sus inconvenientes. Uno de ellos es que si el mapa es demasiado grande, tener en cuenta todo el mapa y explorar todas sus opciones puede resultar costoso. Pero no será un problema en este proyecto debido al tamaño del mapa.
+
+<p float="left">
+  <img src="Documentos/adyacentes.png" width="300" height="300" /> 
+  <img src="Documentos/celdas.png" width="300" height="300" /> 
+</p>
+
+Este algoritmo estará basado en el libro "Unity Artificial Intelligence Programming". La explicación que viene en el libro es muy clara, así que se usará la misma explicación a continuación.
+
+Se parte de una matriz por casillas. Se tiene una casilla Origen y una casilla Destino. El resto de casillas pueden ser obstáculos o casillas de distintos costes. Para determinar el coste de cada casilla se usarán tres variables:
+ - G es el coste de ir desde la casilla Origen a la casilla actual.
+ - H es el coste ***estimado*** de ir de la casilla actual a la casilla destino, es decir, suponiendo que no hay obstáculos que impidan ir por el camino menos costoso.
+ - F es el coste de sumar G y H. Este coste es el que se tendrá en cuenta para elegir el camino más óptimo.
+ 
+<p float="left">
+  <img src="Documentos/G.png" width="300" height="300" /> 
+  <img src="Documentos/H.png" width="300" height="300" /> 
+</p>
+
+El funcionamiento consiste en lo siguiente. Se comienza en la casilla Origen y se añaden a un vector de casillas no visitadas las adyacentes a la casilla Origen. De las casillas no visitadas se calculan los costes mencionados. Se comprueba cual de ellos es menor y esa casilla pasa a marcarse como visitada. En caso de ser todos los costes iguales se coge en último añadido al vector de no visitados por eficiencia.
+
+Este proceso se vuelve a repetir partiendo de la casilla que se ha marcado como visitada. En caso de encontrar un obstáculo o una casilla que se encuentra fuera de los limites de la matriz, esta casilla no se tendrá en cuenta. Al finalizar todas las llamadas, habremos visitado todas las componentes conexas, es decir, aquellas casillas que sean accesibles desde la casilla Origen. Si la casilla destino es alcanzable, habremos obtenido el camino más óptimo. 
+
+<p float="left">
+  <img src="Documentos/principio.png" width="200" height="200" /> 
+  <img src="Documentos/segundopaso.png" width="200" height="200" />
+  <img src="Documentos/tercerpaso.png" width="200" height="200" />  
+</p>
+
+Cada casilla guarda información sobre la casilla anterior desde la que fue alcanzada, con lo que podemos reconstruir el camino óptimo.
+
+<p float="left">
+  <img src="Documentos/final.png" width="300" height="300" /> 
+  <img src="Documentos/camino.png" width="300" height="300" /> 
+</p>
+
+#### Pseudocodigo
+
+Para el algoritmo A* se hará uso de varias clases que especificaremos a continuación: 
+- Node.cs: es la unidad básica del laberinto, conteniendo la información de una sola casilla.
+
+```
+ class Node:
+  float costeTotal; //G
+  float costeEstimado; //H
+  Vector3 posicion;
+  Node parent;
+  bool bObstacle;
+```
+Los Nodos serán agrupados y ordenados en una cola de prioridad.
+
+- PriorityQueue.cs: es una cola que ordena los elementos en de menor a mayor. Esta cola estará adaptada a la clase Node.cs y se ordenará en función del coste estimado. 
+
+- GridManager.cs: se encarga de la gestión y de contener las casillas del tablero (mazmorra) en forma de nodos. 
+
+```
+ class GridManager:
+ int numOfRows;
+ int numOfColumns;
+ float gridCellSize;
+ Vector3 origin = new Vector3();
+ GameObject[] obstacleList;
+ Node[,] nodes {get; set; }
+
+ void CalculateObstacles() {
+   int index = 0;
+   for(int i ... i < numOfColumns ... i++)
+       for(int j ... j < numOfRows ... j++) {
+           Vector3 cellPos = GetGridCellCenter(index);
+           Node node = new Node(cellPos);
+           nodes[i, j] = node;
+           index++;
+       }
+       
+   //Marcaremos como obstáculos los nodos almacenandos
+   //en una lista dichos nodos
+}
+
+ //Método con el que recuperar los vecinos de un nodo en partículas con
+ //ayuda de los métodos GetRow() y GetColumn()
+ void GetNeighbours(Node node, ArrayList neighbors){
+   Vector3 neighborPos = node.position;
+   int neighborIndex = GetGridIndex(neighborPos);
+   
+   vector<Vector2> adyacentes = {(-1.0), (+1,0), (0,1), (0,-1)}
+   for(Vector2 posicion in adyacentes){
+       Vector2 pos = origen.pos + elem; 
+       //comprobar que esta dentro de los limites del tablero
+       // y no es un obstáculo 
+       Assigneoghbour(pos); 
+   }
+
+ void AssignNeighbour(pos){
+
+   if(posValida(pos)){
+      Node node = nodes[pos.x, pos.y];
+      if(!node.bObstacle) addNeighbours(node);
+   }
+ }
+}
+```
+
+- AStar: clase que implementa el algoritmo de búsqueda de caminos. Se usará una cola de prioridad (PriorityQueue.cs) y la Heuristica Manhattan.
+
+```
+ class Astar{
+   //cola de prioridad, ordena los nodos no visitados por coste de menor a mayor
+   public static PriorityQueue openList;
+   //mapa de nodos ya visitados, busqueda eficiente de nodos
+   public static HashSet<Node> closedList;
+   
+   public static ArrayList FindPath(Node start, Node goal) {
+       //Inicializacion de variables
+       openList = new PriorityQueue();
+      openList.Push(start);
+       start.nodeTotalCost = 0.0f;
+       start.estimatedCost = HeuristicEstimateCost(start, goal);
+       closedList = new HashSet<Node>();
+       Node node = null;
+       //se consultan los nodos no visitados en orden por menor coste
+       while (openList.Length != 0) {
+           node = openList.First();
+           //hemos llegado a la meta?
+           if (node.position == goal.position) {
+               return CalculatePath(node); //generar camino
+           }
+           //Create an ArrayList to store the neighboring nodes
+           ArrayList neighbours = new ArrayList();
+           //calculamos los vecinos
+           GridManager.instance.GetNeighbours(node, neighbours);
+           //para cada vecino...
+           for (int i = 0; i < neighbours.Count; i++) {
+               Node neighbourNode = (Node)neighbours[i];
+               //si no esta ya visitado
+               if (!closedList.Contains(neighbourNode)) {
+                   //calculamos los costes
+                   float cost = HeuristicEstimateCost(node,
+                   neighbourNode);
+                   float totalCost = node.nodeTotalCost + cost;
+                   float neighbourNodeEstCost = HeuristicEstimateCost(
+                   neighbourNode, goal);
+                   neighbourNode.nodeTotalCost = totalCost;
+                   neighbourNode.parent = node;
+                   neighbourNode.estimatedCost = totalCost +
+                   neighbourNodeEstCost;
+                   //si no esta pendiente de visitar
+                   if (!openList.Contains(neighbourNode)) {
+                       openList.Push(neighbourNode);
+                   }
+               }
+           }
+       //se aÃ±ade el nodo como visitado
+       closedList.Add(node);
+       //se elimina de los pendientes por visitar
+       openList.Remove(node);
+       }
+
+       //si la meta es alcanzable se devuelve
+       if (node.position != goal.position) {
+           Debug.LogError("Goal Not Found");
+           return null;
+       }
+       //se reconstruye el camino ya calculado gracias a los padres de cada nodo
+       return CalculatePath(node);
+   }
+}
+```
