@@ -59,7 +59,7 @@ Cada casilla guarda información sobre la casilla anterior desde la que fue alca
 #### Pseudocodigo
 
 Para el algoritmo A* se hará uso de varias clases que especificaremos a continuación: 
-- Node.cs: es la unidad básica del laberinto, conteniendo la información de una sola casilla.
+- Node.cs: es la unidad básica de la mazmorra, conteniendo la información de una sola casilla.
 
 ```
  class Node:
