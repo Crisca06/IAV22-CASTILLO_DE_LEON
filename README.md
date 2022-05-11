@@ -12,8 +12,10 @@ En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un
 
 ## Planteamiento
 
-### Demonio
+## Demonio
 Será la IA principal del proyecto, pensado como una inteligencia artificial basada en el escape y el evitar ser atrapado por la sangre de las cabras. Para ello se hará uso del conocido algoritmo de A* que permitirá al demonio elegir el camino más óptimo a la hora de llegar a una zona. La manera en la que el demonio eligirá a dónde ir se basará en un mapa de influencia que cambiará de forma dinámica dependiendo de las zonas marcadas por sangre.
+
+La sangre cambiará el mapa de influencia y dependiendo de la influencia marcada en el mapa el demonio seleccionará una zona libre de influencia a la que dirigirse, evitando en mayor medida las zonas marcadas por sangre y evitando así ser encerrado.
 
 ### A*
 El algoritmo de A* se puede plantear sobre una matriz de celdas. Este algoritmo destaca por su rendimiento, precisión y facilidad de implementación. Se parte de la base de que los agentes que lo navegan conocen de antemano la disposición de los obstáculos y los costes de cada casilla del mapa, en el caso de este proyecto, los costes de las casillas cambiarán de forma dinámica con la sangre colocada sobre el mapa. 
@@ -185,3 +187,73 @@ Los Nodos serán agrupados y ordenados en una cola de prioridad.
    }
 }
 ```
+
+### Mapa de Influencia
+
+El mapa de influencia es la primera técnica del análisis táctico y permite identificar zonas de influencia de cada unidad en el escenario de un videojuego. El mapa de influencia que se utilizará en este proyecto estará dividido principalmente en dos scripts:
+
+- Mapa de influencia a nivel logico y visual. Este dividira el escenario en casillas según el tamaño del escenario. Dicha division de casillas es configurable y estara establecida por el tamaño de casilla determinado. Este script contendra varios metodos para reajustar la prioridad de cada casilla del mapa de influencia.
+
+- Script de las casillas del mapa que contendrán la informacion de la prioridad de unidad en la casilla. Este script también se encargará de colorear las casillas de color dependiendo de su contenido de prioridad. Para su uso habrá que crear un objeto casilla que tendrá este script entre sus componentes.
+
+El mapa de influencia será de esta forma visible y no visible en el escenario.
+
+```
+class InfluenceMap {
+    int cellSize;
+    int fils, cols;
+    
+    Casilla[,] matriz;
+    Vector3 posInicial;
+    
+    void initMap() {
+          cols = Map.size.z / cellSize;
+          fils = Map.size.x / cellSize;
+          
+          matriz = new Casilla[fils, cols];
+          float centerCell = cellSize / 2;
+         
+          for(int i = 0; i < fils; i++){
+              for(int j = 0; j < cols; j++)
+                  //Se crea el prefab de cada casilla y se
+                  //añade a la matriz de casillas
+          }
+    }
+    
+    void updateInfluenceMap(Casilla casilla, int influence, Blood blood){
+          //Añadimos influencia a la casilla en el radio indicado por la unidad, la sangre
+    }
+    
+   public Casilla GetCasilla(Position pos)
+      {
+          //Se obtiene la casilla colocada en la posición en la que se encuentra pos.
+          int i = Mathf.Abs((int)((pos.position.x - posInicial.x) / cellSize));
+          int j = Mathf.Abs((int)((pos.position.z - posInicial.z) / cellSize));
+
+          return matriz[i, j];
+      }
+}
+```
+
+### Seguimos con el demonio
+
+Por lo tanto, el demonio tendrá una máquina de estados que le permitirá cambiar entre los distintos estados, éstos estarán basados principalmente en el nivel de influencia en el que se encuentra o que le rodea. El demonio podrá detectar la sangre alrededor suya y de esta forma decidirá qué hacer a continuación.
+
+Los distintos estados del demonio serán:
+
+- Merodeo: El demonio se moverá entre casillas que se encuentren con un bajo nivel de influencia de la sangre y deambulará por el escenario hasta detectar sangre a su alrededor.
+
+- Huida: El demonio buscará una zona alejada que se encuentre libre de influencia de sangre, huyendo y esquivando así el ser atrapado.
+
+- Atacando: Si el jugador tarda mucho en encerrar al demonio, éste se hará lo suficientemente poderoso para ignorar la sangre y perseguirá al jugador, venciéndolo y poniendo fin a la partida.
+
+## Cabras
+
+Serán personajes con una máquina de estados simple basada principalmente en si le ha dado de comer el jugador o no, si no le ha dado de comer entonces lo ignorarán y en caso de que reciban comida lo perseguirán y confiarán en él hasta la muerte.
+Dejarán su sangre por el mapa permitirán encerrar al demonio.
+
+## Bibliografía
+
+- Unity Artificial Intelligence Programming - Fourth EDITION
+- Material de las transparecias de clase (Federico Peinado)
+- Millington.
