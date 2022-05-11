@@ -1,5 +1,5 @@
-# IAV22 Cristian Castillo de León - Proyecto Final
-### Esta es la documentación para el proyecto final de la asignatura de Inteligencia Artificial para Videojuegos del curso 2021/2022, por Cristian Castillo.
+# IAV 2022 - Cristian Castillo de León - Proyecto Final
+### Esta es la documentación para el proyecto final de la asignatura de Inteligencia Artificial para Videojuegos del curso 2021/2022.
 
 ## Introducción al Proyecto
 El proyecto final se centra principalmente en un pequeño juego del género de terror y mazmorras, con generación aleatoria de las mismas.
@@ -256,4 +256,3 @@ Dejarán su sangre por el mapa permitirán encerrar al demonio.
 
 - Unity Artificial Intelligence Programming - Fourth EDITION
 - Material de las transparecias de clase (Federico Peinado)
-- Millington.
