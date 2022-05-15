@@ -254,5 +254,7 @@ Dejarán su sangre por el mapa permitirán encerrar al demonio.
 
 ## Bibliografía
 
+- La idea fue pensada por primera vez en el juego de recreativa clásica Qix, en la que se coloreaba la pantalla intentando encerrar unas figuras y al conseguirlos, estas se coloreaban. [ENLACE](https://www.youtube.com/watch?v=EdEOH5O2kCo)
+
 - Unity Artificial Intelligence Programming - Fourth EDITION
 - Material de las transparecias de clase (Federico Peinado)
