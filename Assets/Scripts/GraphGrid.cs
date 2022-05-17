@@ -13,7 +13,7 @@
         Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
         Contacto: email@federicopeinado.com
 */
-namespace UCM.IAV.Navegacion
+namespace UCM.IAV.CristianCastillo
 {
 
     using UnityEngine;
@@ -53,6 +53,8 @@ namespace UCM.IAV.Navegacion
             location.x = Mathf.Floor(id % numCols);
             return location;
         }
+
+        public bool isWall(int x, int y) { return mapVertices[x, y]; }
 
         public bool posIsValid(int x, int y)
         {

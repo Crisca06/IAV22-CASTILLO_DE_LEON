@@ -1,72 +1,92 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+namespace UCM.IAV.CristianCastillo {
 
-public class InfluenceMap : MonoBehaviour
-{
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public class InfluenceMap : MonoBehaviour
     {
-        
-    }
+        float cellSize;
 
-    public void initMap(int numRows, int numCols)
-    {
-        int j = 0;
-        int i = 0;
-        int id = 0;
-        string line;
+        int fils, cols;
 
-        Vector3 position = Vector3.zero;
-        Vector3 scale = Vector3.zero;
+        InfluenceTile[] matriz;
+        InfluenceTile leastInfluencedTile;
+        List<Vertex> vertices;
+        public GraphGrid graph;
 
-        vertices = new List<Vertex>(numRows * numCols);
-        neighbors = new List<List<Vertex>>(numRows * numCols);
-        costs = new List<List<float>>(numRows * numCols);
-        vertexObjs = new GameObject[numRows * numCols];
-        mapVertices = new bool[numRows, numCols];
+        bool influenceVisible;
 
-        for (i = 0; i < numRows; i++)
+        [SerializeField]
+        GameObject tilePrefab;
+        [SerializeField]
+        GameObject wallTilePrefab;
+
+
+        public static InfluenceMap instance;
+        private void Awake()
         {
-            for (j = 0; j < numCols; j++)
+            if (!instance) instance = this;
+            else Destroy(this.gameObject);
+        }
+        public static InfluenceMap GetInstance()
+        {
+            return instance;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            cellSize = graph.cellSize;
+        }
+
+        public void initMap(int numRows, int numCols)
+        {
+            int j = 0;
+            int i = 0;
+            int id = 0;
+            string line;
+
+            Vector3 position = Vector3.zero;
+            Vector3 scale = Vector3.zero;
+
+            vertices = graph.GetVertices();
+
+            for (i = 0; i < numRows; i++)
             {
-
-                int rnd = 100;
-                bool isGround = false;
-                if (line[j] != 'T')
+                for (j = 0; j < numCols; j++)
                 {
-                    isGround = true;
-                    rnd = UnityEngine.Random.Range(1, 5);
-                    if (line[j] == 'S')
+                    bool isWall = false;
+
+                    position.x = j * cellSize;
+                    position.z = i * cellSize;
+
+                    id = graph.GridToId(j, i);
+                    isWall = graph.isWall(i, j);
+
+                    if (!isWall)
                     {
-                        vertexObjs[id].name = "Exit";
-                        salida.transform.position = new Vector3(j * cellSize, 1, i * cellSize);
+                        GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity) as GameObject;
+                        matriz[id] = tile.GetComponent<InfluenceTile>();
+                        matriz[id].setPosition(i, j);
                     }
+                    else
+                    {
+                        GameObject tile = Instantiate(wallTilePrefab, position, Quaternion.identity) as GameObject;
+                        matriz[id] = tile.GetComponent<InfluenceTile>();
+                        matriz[id].setPosition(i, j);
+                    }
+
+                    matriz[id].name = matriz[id].name.Replace("(Clone)", id.ToString());
                 }
-
-                mapVertices[i, j] = isGround;
-                position.x = j * cellSize;
-                position.z = i * cellSize;
-
-                id = GridToId(j, i);
-
-                if (isGround)
-                {
-                    vertexObjs[id] = Instantiate(vertexPrefab, position, Quaternion.identity) as GameObject;
-                    //vertexObjs[id].GetComponent<Renderer>().material.color = Color.cyan;
-                }
-                else
-                    vertexObjs[id] = Instantiate(obstaclePrefab, position, Quaternion.identity) as GameObject;
-                vertexObjs[id].name = vertexObjs[id].name.Replace("(Clone)", id.ToString());
             }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

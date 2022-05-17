@@ -13,7 +13,7 @@
         Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
         Contacto: email@federicopeinado.com
 */
-namespace UCM.IAV.Navegacion
+namespace UCM.IAV.CristianCastillo
 {
 
     using UnityEngine;
@@ -25,7 +25,6 @@ namespace UCM.IAV.Navegacion
     /// </summary>
     public abstract class Graph : MonoBehaviour
     {
-
         public GameObject vertexPrefab;
         protected List<Vertex> vertices;
         protected List<List<Vertex>> neighbors;
@@ -47,6 +46,8 @@ namespace UCM.IAV.Navegacion
         }
 
         public virtual void Load() { }
+
+        public List<Vertex> GetVertices() { return vertices; }
 
         public virtual int GetSize()
         {

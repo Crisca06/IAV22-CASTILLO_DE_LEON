@@ -1,44 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class InfluenceTile : MonoBehaviour
+namespace UCM.IAV.CristianCastillo
 {
-    public int fil, col;
 
-    public int influence;
-    public bool influenceActive;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
-    Color iniColor;
-
-    public void setPosition(int i, int j) { fil = i; col = j; }
-
-    // Start is called before the first frame update
-    void Start()
+    public class InfluenceTile : MonoBehaviour
     {
-        iniColor = GetComponent<MeshRenderer>().material.color;
-    }
+        public int fil, col;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
-        renderer.material.color = iniColor;
-        renderer.material.color = ColorInfluence();
-    }
+        public int influence;
+        public bool influenceActive;
 
-    public Color ColorInfluence()
-    {
-        Color color;
+        Color iniColor;
 
-        if (!influenceActive) return iniColor;
+        public void setPosition(int i, int j) { fil = i; col = j; }
 
-        if (influence > 0)
+        // Start is called before the first frame update
+        void Start()
         {
-            color = Color.red;
-            color.a = 0.4f;
-            return color;
+            iniColor = GetComponent<MeshRenderer>().material.color;
         }
-        else return iniColor;
+
+        // Update is called once per frame
+        private void Update()
+        {
+            MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+            renderer.material.color = iniColor;
+            renderer.material.color = ColorInfluence();
+        }
+
+        public Color ColorInfluence()
+        {
+            Color color;
+
+            if (!influenceActive) return iniColor;
+
+            if (influence > 0)
+            {
+                color = Color.red;
+                color.a = 0.4f;
+                return color;
+            }
+            else return iniColor;
+        }
     }
+
 }

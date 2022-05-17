@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UCM.IAV.Navegacion;
+using UCM.IAV.CristianCastillo;
 using UnityEngine;
 
 public class Salida : MonoBehaviour

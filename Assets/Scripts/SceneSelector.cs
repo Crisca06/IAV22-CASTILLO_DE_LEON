@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using UCM.IAV.Navegacion;
+using UCM.IAV.CristianCastillo;
 
 public class SceneSelector : MonoBehaviour
 {

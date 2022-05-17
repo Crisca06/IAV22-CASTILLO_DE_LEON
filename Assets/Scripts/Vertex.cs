@@ -13,7 +13,7 @@
         Esta asignatura se imparte en la Facultad de Informática de la Universidad Complutense de Madrid (España).
         Contacto: email@federicopeinado.com
 */
-namespace UCM.IAV.Navegacion
+namespace UCM.IAV.CristianCastillo
 {
     using UnityEngine;
     using System.Collections.Generic;
