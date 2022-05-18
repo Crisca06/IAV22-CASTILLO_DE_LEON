@@ -63,19 +63,28 @@ namespace UCM.IAV.CristianCastillo {
 
                     if (isWall) continue;
 
-                    GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity) as GameObject;
+                    GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, this.transform) as GameObject;
                     matriz[id] = tile.AddComponent<InfluenceTile>();
                     matriz[id].setPosition(i, j);
+
+                    if(i == numRows - 2 || j == numCols - 2 || i == 1 || j == 1)
+                        matriz[id].influence = 10;
+                    else matriz[id].influence = graph.getVertexObj(id).GetComponent<Vertex>().coste;
 
                     matriz[id].name = matriz[id].name.Replace("(Clone)", id.ToString());
                 }
             }
+
+            UpdateInfluence();
         }
 
         // Update is called once per frame
-        void Update()
+        void UpdateInfluence()
         {
-
+            foreach (Vertex v in graph.GetVertices()) {
+                if(v.bObstacle)
+                v.coste = matriz[v.id].influence;
+            }
         }
     }
 

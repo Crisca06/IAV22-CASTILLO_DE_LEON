@@ -10,7 +10,7 @@ namespace UCM.IAV.CristianCastillo
         public int fil, col;
 
         public int influence = 1;
-        public bool influenceActive;
+        public bool influenceActive = true;
 
         Color iniColor;
 
