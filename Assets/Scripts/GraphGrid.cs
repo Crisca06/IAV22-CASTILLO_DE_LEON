@@ -40,6 +40,7 @@ namespace UCM.IAV.CristianCastillo
         bool[,] mapVertices;
         public GameObject salida;
         public GameObject minotauro;
+        public InfluenceMap influenceMap;
 
         public int GridToId(int x, int y)
         {
@@ -54,7 +55,7 @@ namespace UCM.IAV.CristianCastillo
             return location;
         }
 
-        public bool isWall(int x, int y) { return mapVertices[x, y]; }
+        public bool isWall(int x, int y) { return !mapVertices[x, y]; }
 
         public bool posIsValid(int x, int y)
         {
@@ -95,12 +96,11 @@ namespace UCM.IAV.CristianCastillo
                         for (j = 0; j < numCols; j++)
                         {
 
-                            int rnd = 100;
+                            int rnd = 10000;
                             bool isGround = false;
                             if (line[j] != 'T')
                             {
                                 isGround = true;
-                                rnd = UnityEngine.Random.Range(1, 5);
                                 if (line[j] == 'S')
                                 {
                                     vertexObjs[id].name = "Exit";
@@ -117,43 +117,22 @@ namespace UCM.IAV.CristianCastillo
                             if (isGround)
                             {
                                 vertexObjs[id] = Instantiate(vertexPrefab, position, Quaternion.identity) as GameObject;
-                                //vertexObjs[id].GetComponent<Renderer>().material.color = Color.cyan;
                             }
-                            else
-                                vertexObjs[id] = Instantiate(obstaclePrefab, position, Quaternion.identity) as GameObject;
+                            else vertexObjs[id] = Instantiate(obstaclePrefab, position, Quaternion.identity) as GameObject;
+                            
                             vertexObjs[id].name = vertexObjs[id].name.Replace("(Clone)", id.ToString());
                             Vertex v = vertexObjs[id].AddComponent<Vertex>();
                             
                             v.id = id;
                             v.bObstacle = isGround;
 
-                            v.coste = rnd;
-
-                            if (rnd == 1)
-                            {
-                                //vertexObjs[id].gameObject.GetComponent<Renderer>().material.color = Color.cyan;
-                                v.setColor(new Color(170/255f, 47/255f, 21/255f));
-                            }
-                            else if (rnd == 2)
-                            {
-                                //vertexObjs[id].gameObject.GetComponent<Renderer>().material.color = Color.blue;
-                                v.setColor(new Color(88/255f, 24/255f, 69/255f));
-                            }
-                            else if (rnd == 3)
-                            {
-                                //vertexObjs[id].gameObject.GetComponent<Renderer>().material.color = Color.green;
+                            if (isGround) {
+                                v.coste = 1;
                                 v.setColor(Color.gray);
                             }
-                            else if (rnd == 4)
-                            {
-                                //vertexObjs[id].gameObject.GetComponent<Renderer>().material.color = Color.white;
-                                v.setColor(Color.black);
+                            else {
+                                v.coste = rnd;
                             }
-                            //else if (rnd == 5)
-                            //{
-                            //    vertexObjs[id].gameObject.GetComponent<Renderer>().material.color = Color.black;
-                            //}
-
 
                             vertices.Add(v);
                             neighbors.Add(new List<Vertex>());
@@ -186,6 +165,7 @@ namespace UCM.IAV.CristianCastillo
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
             minotauro.transform.position = n.transform.position;
+            influenceMap.initMap(numRows, numCols);
         }
 
         protected void SetNeighbours(int x, int y, bool get8 = false)

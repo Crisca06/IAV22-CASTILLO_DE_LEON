@@ -9,7 +9,7 @@ namespace UCM.IAV.CristianCastillo
     {
         public int fil, col;
 
-        public int influence;
+        public int influence = 1;
         public bool influenceActive;
 
         Color iniColor;
@@ -36,7 +36,7 @@ namespace UCM.IAV.CristianCastillo
 
             if (!influenceActive) return iniColor;
 
-            if (influence > 0)
+            if (influence > 1)
             {
                 color = Color.red;
                 color.a = 0.4f;

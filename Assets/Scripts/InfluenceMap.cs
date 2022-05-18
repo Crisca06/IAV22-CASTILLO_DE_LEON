@@ -19,8 +19,6 @@ namespace UCM.IAV.CristianCastillo {
 
         [SerializeField]
         GameObject tilePrefab;
-        [SerializeField]
-        GameObject wallTilePrefab;
 
 
         public static InfluenceMap instance;
@@ -45,11 +43,9 @@ namespace UCM.IAV.CristianCastillo {
             int j = 0;
             int i = 0;
             int id = 0;
-            string line;
 
             Vector3 position = Vector3.zero;
-            Vector3 scale = Vector3.zero;
-
+            matriz = new InfluenceTile[numRows * numCols];
             vertices = graph.GetVertices();
 
             for (i = 0; i < numRows; i++)
@@ -60,22 +56,16 @@ namespace UCM.IAV.CristianCastillo {
 
                     position.x = j * cellSize;
                     position.z = i * cellSize;
+                    position.y = 1.25f;
 
                     id = graph.GridToId(j, i);
                     isWall = graph.isWall(i, j);
 
-                    if (!isWall)
-                    {
-                        GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity) as GameObject;
-                        matriz[id] = tile.GetComponent<InfluenceTile>();
-                        matriz[id].setPosition(i, j);
-                    }
-                    else
-                    {
-                        GameObject tile = Instantiate(wallTilePrefab, position, Quaternion.identity) as GameObject;
-                        matriz[id] = tile.GetComponent<InfluenceTile>();
-                        matriz[id].setPosition(i, j);
-                    }
+                    if (isWall) continue;
+
+                    GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity) as GameObject;
+                    matriz[id] = tile.AddComponent<InfluenceTile>();
+                    matriz[id].setPosition(i, j);
 
                     matriz[id].name = matriz[id].name.Replace("(Clone)", id.ToString());
                 }
