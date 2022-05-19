@@ -507,6 +507,8 @@ MonoBehaviour:
   particles: {fileID: 1129063276}
   graphGrid: {fileID: 1574568752}
   testerGraph: {fileID: 478290963}
+  influenceMap: {fileID: 0}
+  trapped: 0
   dest: {fileID: 0}
   maxIAVelocity: 3
 --- !u!54 &717789684
@@ -10605,7 +10607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertexPrefab: {fileID: 100000, guid: a0702439d05d5334e885e87aeba2a438, type: 3}
   path: []
-  minotauroGO: {fileID: 717789682}
+  demonio: {fileID: 717789682}
   obstaclePrefab: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   mapsDir: Maps
   mapName: arena.map
@@ -10614,7 +10616,6 @@ MonoBehaviour:
   defaultCost: 1
   maximumCost: Infinity
   salida: {fileID: 635578000}
-  minotauro: {fileID: 717789682}
   influenceMap: {fileID: 1629100543}
 --- !u!4 &1574568753
 Transform:

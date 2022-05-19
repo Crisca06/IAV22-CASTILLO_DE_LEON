@@ -38,7 +38,7 @@ namespace UCM.IAV.CristianCastillo
         public List<Vertex> path;
         //public bool isFinished;
 
-        public GameObject minotauroGO;
+        public GameObject demonio;
 
         public virtual void Start()
         {
@@ -175,7 +175,7 @@ namespace UCM.IAV.CristianCastillo
                 for (int i = 0; i < neighbours.Length; i++)
                 {
                     Vertex neighbourVertex = neighbours[i];
-                    if ((neighbourVertex.gameObject.transform.position - minotauroGO.transform.position).magnitude < 1f);
+                    if ((neighbourVertex.gameObject.transform.position - demonio.transform.position).magnitude < 1f);
                     else if (!closedList.Contains(neighbourVertex))
                     {
                         if (previous[neighbourVertex.id] != -1) continue;

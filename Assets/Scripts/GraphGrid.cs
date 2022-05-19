@@ -39,7 +39,6 @@ namespace UCM.IAV.CristianCastillo
         GameObject[] vertexObjs;
         bool[,] mapVertices;
         public GameObject salida;
-        public GameObject demonio;
         public InfluenceMap influenceMap;
 
         public int GridToId(int x, int y)

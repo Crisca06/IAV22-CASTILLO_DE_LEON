@@ -22,6 +22,7 @@ namespace UCM.IAV.CristianCastillo
 
         public GraphGrid graphGrid;
         public TesterGraph testerGraph;
+        public InfluenceMap influenceMap;
         public bool trapped = false;
 
         /// ------------------------------------------------------- ///
@@ -62,6 +63,10 @@ namespace UCM.IAV.CristianCastillo
         public void setFollow(bool fol)
         {
             follow = fol;
+        }
+        public bool detectBlood()
+        {
+            return influenceMap.getInfluenceArea((int)transform.position.z, (int)transform.position.x, 1);
         }
 
         public void MoveToDest()

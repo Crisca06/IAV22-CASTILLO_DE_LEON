@@ -83,6 +83,26 @@ namespace UCM.IAV.CristianCastillo {
                 v.coste = matriz[v.id].influence;
             }
         }
+        bool checkValidCell(int i, int j, ref int id) {
+            id = graph.GridToId(j, i);
+            return id < matriz.Length && id >= 0; 
+        }
+        public bool getInfluenceArea(int fil, int col, int radius) {
+            bool influenceNear = false;
+
+            for(int i = fil - radius; i < fil + radius; i++)
+            {
+                for(int j = col - radius; j < col + radius; j++)
+                {
+                    int id = 0;
+                    if (!checkValidCell(fil, col, ref id)) continue;
+
+                    if (matriz[id].influence >= 1000) influenceNear = true;
+                }
+            }
+
+            return influenceNear;
+        }
     }
 
 }
