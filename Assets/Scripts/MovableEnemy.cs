@@ -3,10 +3,10 @@ namespace UCM.IAV.CristianCastillo
     using System.Collections;
     using System.Collections.Generic;
     using UCM.IAV.CristianCastillo;
+    using Unity.VisualScripting;
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody))]
-
     public class MovableEnemy : MonoBehaviour
     {
         public Transform playerDetector;
@@ -22,11 +22,12 @@ namespace UCM.IAV.CristianCastillo
 
         public GraphGrid graphGrid;
         public TesterGraph testerGraph;
+        public bool trapped = false;
 
         /// ------------------------------------------------------- ///
 
         List<Vertex> path; //camino calculado
-        private Transform dest;
+        public Transform dest;
         int index = 0;
 
         [Tooltip("Velocidad maxima de movimiento por IA")]
@@ -41,46 +42,22 @@ namespace UCM.IAV.CristianCastillo
             path = new List<Vertex>();
         }
 
-        public int randomVertex() { return graphGrid.randomNoObstacle(); }
+        public int randomVertex() { return graphGrid.randomVertexWithoutBlood(); }
+        public bool destinyIsNull() { return dest == null; }
         public void moveToVertex(int id)
         {
+            if (id == -1) {
+                trapped = true;
+                return;
+            }
+         
             GameObject dstEnemy = graphGrid.getVertexObj(id);
             List<Vertex> pathEnemy = graphGrid.GetPathAstar(this.gameObject, dstEnemy, null);
             AddExitPath(pathEnemy);
         }
 
         private void Update()
-        {
-            if (stop)
-            {
-                timer -= Time.deltaTime;
-                if (timer <= 0)
-                {
-                    timer = 5.0f;
-                    stop = false;
-                    target.GetComponent<MovablePlayer>().auxVelocity = 100;
-                    particles.gameObject.SetActive(false);
-                }
-            }
-            else if (follow)
-            {
-                rb.isKinematic = false;
-                Vector3 dir = (target.transform.position - transform.position);
-                if (dir.magnitude < 2)
-                {
-                    stop = true;
-                    target.GetComponent<MovablePlayer>().auxVelocity = 50;
-                    particles.gameObject.SetActive(true);
-                }
-                else
-                    transform.Translate(dir.normalized * Time.deltaTime * 5);
-            }
-            else if (!follow)
-            {
-                rb.isKinematic = true;
-                MoveToDest();
-            }
-        }
+        { }
 
         public void setFollow(bool fol)
         {
@@ -106,9 +83,9 @@ namespace UCM.IAV.CristianCastillo
             {
                 Vertex next = path[index];
 
-                //Recoger hilo (en caso de que el minotauro también mostrase el suyo)
-                //Renderer r = next.GetComponent<Renderer>();
-                //r.material.color = next.getColor();
+                //Despintar camino
+                Renderer r = next.GetComponent<Renderer>();
+                r.material.color = next.getColor();
 
                 //Siguiente objetivo si aun queda camino por recorrer
                 if (index > 0)
@@ -117,9 +94,7 @@ namespace UCM.IAV.CristianCastillo
                     next = path[index];
                     dest = next.GetComponent<Transform>();
                 }
-                else
-                {
-                    testerGraph.setDestinyNull();
+                else {
                     index = 0;
                     path.Clear();
                 }
@@ -134,6 +109,8 @@ namespace UCM.IAV.CristianCastillo
             //Movemos
             transform.Translate(dir * Time.deltaTime);
             playerDetector.transform.rotation = Quaternion.LookRotation(dir);
+
+            if(index == 0) dest = null;
         }
 
         public void AddExitPath(List<Vertex> exit)

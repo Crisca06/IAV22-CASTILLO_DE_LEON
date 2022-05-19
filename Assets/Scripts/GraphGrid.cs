@@ -39,7 +39,7 @@ namespace UCM.IAV.CristianCastillo
         GameObject[] vertexObjs;
         bool[,] mapVertices;
         public GameObject salida;
-        public GameObject minotauro;
+        public GameObject demonio;
         public InfluenceMap influenceMap;
 
         public int GridToId(int x, int y)
@@ -164,7 +164,7 @@ namespace UCM.IAV.CristianCastillo
         {
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
-            minotauro.transform.position = n.transform.position;
+            demonio.transform.position = n.transform.position;
             influenceMap.initMap(numRows, numCols, cellSize);
         }
 
@@ -322,6 +322,30 @@ namespace UCM.IAV.CristianCastillo
 
             Vertex vertex = GetNearestVertex(new Vector3(x, 0, y));
             return vertex.id;
+        }
+
+        public int randomVertexWithoutBlood()
+        {
+            bool manyIterations = false;
+            int i = 0;
+
+            while (!manyIterations)
+            {
+                int x = UnityEngine.Random.Range(0, mapVertices.GetLength(1) - 1);
+                int y = UnityEngine.Random.Range(0, mapVertices.GetLength(0) - 1);
+
+                Vertex v = GetNearestVertex(new Vector3(x, 0, y));
+                if (v.coste < 1000) return v.id;
+
+                i++;
+                
+                if (i > vertices.Count) manyIterations = true;
+            }
+
+            foreach (Vertex v in vertices)
+                if (v.coste < 1000) return v.id;
+
+            return -1;
         }
 
         public GameObject getVertexObj(int id)

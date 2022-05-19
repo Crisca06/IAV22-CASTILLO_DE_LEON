@@ -79,14 +79,6 @@ namespace UCM.IAV.CristianCastillo
             // El destino simplemente poniendo el ratón encima
             dstObj = GetNodeFromScreen(Input.mousePosition);
 
-            if(dstEnemy == null)
-            {
-                int eneId = graph.randomNoObstacle();
-                dstEnemy = graph.getVertexObj(eneId);
-                pathEnemy = graph.GetPathAstar(eneTrans, dstEnemy, null);
-                ene.AddExitPath(pathEnemy);
-            }
-
             // Con la barra espaciadora se activa la búsqueda del camino mínimo
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -213,11 +205,6 @@ namespace UCM.IAV.CristianCastillo
                 break;
             }
             return node;
-        }
-
-        public void setDestinyNull()
-        {
-            dstEnemy = null;
         }
     }
 }
