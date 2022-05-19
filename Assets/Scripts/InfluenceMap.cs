@@ -33,16 +33,13 @@ namespace UCM.IAV.CristianCastillo {
         }
 
         // Start is called before the first frame update
-        void Start()
-        {
-            cellSize = graph.cellSize;
-        }
+        void Start() { }
 
-        public void initMap(int numRows, int numCols)
+        public void initMap(int numRows, int numCols, float cellS)
         {
-            int j = 0;
-            int i = 0;
-            int id = 0;
+            int j; int i; int id;
+            j = i = id = 0;
+            cellSize = cellS;
 
             Vector3 position = Vector3.zero;
             matriz = new InfluenceTile[numRows * numCols];
@@ -52,7 +49,7 @@ namespace UCM.IAV.CristianCastillo {
             {
                 for (j = 0; j < numCols; j++)
                 {
-                    bool isWall = false;
+                    bool isWall;
 
                     position.x = j * cellSize;
                     position.z = i * cellSize;

@@ -165,7 +165,7 @@ namespace UCM.IAV.CristianCastillo
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
             minotauro.transform.position = n.transform.position;
-            influenceMap.initMap(numRows, numCols);
+            influenceMap.initMap(numRows, numCols, cellSize);
         }
 
         protected void SetNeighbours(int x, int y, bool get8 = false)

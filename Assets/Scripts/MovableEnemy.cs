@@ -1,6 +1,5 @@
 namespace UCM.IAV.CristianCastillo
 {
-
     using System.Collections;
     using System.Collections.Generic;
     using UCM.IAV.CristianCastillo;
@@ -40,6 +39,14 @@ namespace UCM.IAV.CristianCastillo
             rend = gameObject.GetComponent<Renderer>();
 
             path = new List<Vertex>();
+        }
+
+        public int randomVertex() { return graphGrid.randomNoObstacle(); }
+        public void moveToVertex(int id)
+        {
+            GameObject dstEnemy = graphGrid.getVertexObj(id);
+            List<Vertex> pathEnemy = graphGrid.GetPathAstar(this.gameObject, dstEnemy, null);
+            AddExitPath(pathEnemy);
         }
 
         private void Update()
