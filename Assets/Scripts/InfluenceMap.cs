@@ -15,6 +15,7 @@ namespace UCM.IAV.CristianCastillo {
         List<Vertex> vertices;
         public GraphGrid graph;
 
+        bool initialized = false;
         bool influenceVisible;
 
         [SerializeField]
@@ -64,15 +65,19 @@ namespace UCM.IAV.CristianCastillo {
                     matriz[id] = tile.AddComponent<InfluenceTile>();
                     matriz[id].setPosition(i, j);
 
-                    if(i == numRows - 2 || j == numCols - 2 || i == 1 || j == 1)
+                    int random = Random.Range(0, 4);
+
+                    if (i == numRows - 2 || j == numCols - 2 || i == 1 || j == 1)
                         matriz[id].influence = 10;
-                    else matriz[id].influence = graph.getVertexObj(id).GetComponent<Vertex>().coste;
+                    else if (random != 0) matriz[id].influence = graph.getVertexObj(id).GetComponent<Vertex>().coste;
+                    else matriz[id].influence = 1000;
 
                     matriz[id].name = matriz[id].name.Replace("(Clone)", id.ToString());
                 }
             }
 
             UpdateInfluence();
+            initialized = true;
         }
 
         // Update is called once per frame
@@ -85,17 +90,22 @@ namespace UCM.IAV.CristianCastillo {
         }
         bool checkValidCell(int i, int j, ref int id) {
             id = graph.GridToId(j, i);
-            return id < matriz.Length && id >= 0; 
+            return id >= 0; 
         }
-        public bool getInfluenceArea(int fil, int col, int radius) {
-            bool influenceNear = false;
 
-            for(int i = fil - radius; i < fil + radius; i++)
+        public bool getInfluenceArea(float fil, float col, int radius) {
+            if (!initialized) return false;
+
+            bool influenceNear = false;
+            int fil_ = graph.roundFloat(fil);
+            int col_ = graph.roundFloat(col);
+
+            for(int i = fil_ - radius; i < fil_ + radius; i++)
             {
-                for(int j = col - radius; j < col + radius; j++)
+                for(int j = col_ - radius; j < col + radius; j++)
                 {
                     int id = 0;
-                    if (!checkValidCell(fil, col, ref id)) continue;
+                    if (!checkValidCell(i, j, ref id) || !matriz[id]) continue;
 
                     if (matriz[id].influence >= 1000) influenceNear = true;
                 }

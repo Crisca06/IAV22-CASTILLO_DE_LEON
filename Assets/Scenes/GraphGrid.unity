@@ -507,8 +507,9 @@ MonoBehaviour:
   particles: {fileID: 1129063276}
   graphGrid: {fileID: 1574568752}
   testerGraph: {fileID: 478290963}
-  influenceMap: {fileID: 0}
+  influenceMap: {fileID: 1629100543}
   trapped: 0
+  radius: 3
   dest: {fileID: 0}
   maxIAVelocity: 3
 --- !u!54 &717789684

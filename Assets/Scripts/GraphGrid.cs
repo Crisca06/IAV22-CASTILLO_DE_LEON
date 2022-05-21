@@ -214,11 +214,17 @@ namespace UCM.IAV.CristianCastillo
                 costs[vertexId].Add(defaultCost);
             }
         }
+        public int roundFloat(float i)
+        {
+            if (i <= (int)i + 0.5)
+                return (int)i;
+            else return (int)i + 1;
+        }
 
         public override Vertex GetNearestVertex(Vector3 position)
         {
-            int col = (int)(position.x / cellSize);
-            int row = (int)(position.z / cellSize);
+            int col = roundFloat(position.x / cellSize);
+            int row = roundFloat(position.z / cellSize);
             return GetNearestVertex(col, row);
         }
 
@@ -343,6 +349,34 @@ namespace UCM.IAV.CristianCastillo
 
             foreach (Vertex v in vertices)
                 if (v.coste < 1000) return v.id;
+
+            return -1;
+        }
+
+        public int randomVertexInArea(float fil, float col, int radius)
+        {
+            int fil_ = roundFloat(fil);
+            int col_ = roundFloat(col);
+
+            List<Vertex> v = new List<Vertex>();
+
+            for (int i = fil_ - radius; i < fil_ + radius; i++)
+            {
+                for (int j = col_ - radius; j < col + radius; j++)
+                {
+                    int id = GridToId(j, i);
+                    if (id < 0) continue;
+                    if (i == fil_ && j == col_) continue;
+
+                    if (vertices[id].coste < 1000) v.Add(vertices[id]);
+                }
+            }
+
+            if(v.Count > 0)
+            {
+                int random = UnityEngine.Random.Range(0, v.Count);
+                return v[random].id;
+            }
 
             return -1;
         }

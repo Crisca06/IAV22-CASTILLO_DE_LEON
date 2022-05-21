@@ -24,6 +24,7 @@ namespace UCM.IAV.CristianCastillo
         public TesterGraph testerGraph;
         public InfluenceMap influenceMap;
         public bool trapped = false;
+        public int radius = 3;
 
         /// ------------------------------------------------------- ///
 
@@ -44,6 +45,9 @@ namespace UCM.IAV.CristianCastillo
         }
 
         public int randomVertex() { return graphGrid.randomVertexWithoutBlood(); }
+
+        public int randomVertexWithinArea() { return graphGrid.randomVertexInArea(transform.position.z, transform.position.x, radius); }
+
         public bool destinyIsNull() { return dest == null; }
         public void moveToVertex(int id)
         {
@@ -54,7 +58,14 @@ namespace UCM.IAV.CristianCastillo
          
             GameObject dstEnemy = graphGrid.getVertexObj(id);
             List<Vertex> pathEnemy = graphGrid.GetPathAstar(this.gameObject, dstEnemy, null);
-            AddExitPath(pathEnemy);
+
+            int costeTotal = 0;
+            foreach (Vertex v in pathEnemy)
+                costeTotal += v.coste;
+
+            if (costeTotal < 1000)
+                AddExitPath(pathEnemy);
+            else dest = null;
         }
 
         private void Update()
@@ -66,7 +77,7 @@ namespace UCM.IAV.CristianCastillo
         }
         public bool detectBlood()
         {
-            return influenceMap.getInfluenceArea((int)transform.position.z, (int)transform.position.x, 1);
+            return influenceMap.getInfluenceArea(transform.position.z, transform.position.x, radius);
         }
 
         public void MoveToDest()
