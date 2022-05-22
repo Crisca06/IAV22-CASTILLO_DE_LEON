@@ -10569,14 +10569,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215951688}
-  m_LocalRotation: {x: 0.6422126, y: 0, z: 0, w: 0.7665266}
-  m_LocalPosition: {x: 24.25, y: 44.85, z: 14.93}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 24.25, y: 44, z: 14.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1574568751
 GameObject:
   m_ObjectHideFlags: 0
@@ -10611,13 +10611,14 @@ MonoBehaviour:
   player: {fileID: 1854565597}
   obstaclePrefab: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   mapsDir: Maps
-  mapName: arena.map
+  mapName: test.map
   get8Vicinity: 0
   cellSize: 1
   defaultCost: 1
   maximumCost: Infinity
   salida: {fileID: 635578000}
   influenceMap: {fileID: 1629100543}
+  mainCam: {fileID: 1215951692}
 --- !u!4 &1574568753
 Transform:
   m_ObjectHideFlags: 0

@@ -40,6 +40,7 @@ namespace UCM.IAV.CristianCastillo
         bool[,] mapVertices;
         public GameObject salida;
         public InfluenceMap influenceMap;
+        public Camera mainCam;
 
         public int GridToId(int x, int y)
         {
@@ -165,6 +166,7 @@ namespace UCM.IAV.CristianCastillo
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
             player.transform.position = new Vector3(n.transform.position.x, 0.3f, n.transform.position.z);
             influenceMap.initMap(numRows, numCols, cellSize);
+            moveCamera();
         }
 
         protected void SetNeighbours(int x, int y, bool get8 = false)
@@ -384,6 +386,11 @@ namespace UCM.IAV.CristianCastillo
         public GameObject getVertexObj(int id)
         {
             return vertexObjs[id];
+        }
+
+        public void moveCamera()
+        {
+            mainCam.transform.position = new Vector3(numCols / 2, (numCols + numRows) / 5 + 24f, numRows / 2);
         }
     }
 }
