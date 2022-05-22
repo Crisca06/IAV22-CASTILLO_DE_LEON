@@ -143,5 +143,7 @@ namespace UCM.IAV.CristianCastillo
                 index = 0;
             }
         }
+
+        public void DestNull() { dest = null; }
     }
 }

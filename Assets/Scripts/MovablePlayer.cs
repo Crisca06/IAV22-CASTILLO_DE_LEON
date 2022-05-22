@@ -53,9 +53,9 @@ namespace UCM.IAV.CristianCastillo
                 Vector3 dir = new Vector3(x, 0, z);
                 dir.Normalize();
                 dir *= maxIAVelocity;
+
                 //Movemos
-                //transform.Translate(dir * Time.deltaTime);
-                rb.velocity = dir * Time.deltaTime * auxVelocity;
+                transform.Translate(dir * Time.deltaTime);
             }
         }
 

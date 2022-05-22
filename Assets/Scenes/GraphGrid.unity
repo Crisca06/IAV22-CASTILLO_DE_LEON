@@ -10608,7 +10608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertexPrefab: {fileID: 100000, guid: a0702439d05d5334e885e87aeba2a438, type: 3}
   path: []
-  demonio: {fileID: 717789682}
+  player: {fileID: 1854565597}
   obstaclePrefab: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   mapsDir: Maps
   mapName: arena.map
@@ -10948,6 +10948,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7557717173011863098, guid: dd942b96248273b489f4d2356d416bd2, type: 3}
+      propertyPath: graph
+      value: 
+      objectReference: {fileID: 1574568752}
+    - target: {fileID: 7557717173011863098, guid: dd942b96248273b489f4d2356d416bd2, type: 3}
+      propertyPath: influenceMap
+      value: 
+      objectReference: {fileID: 1629100543}
     - target: {fileID: 8125555466556624543, guid: dd942b96248273b489f4d2356d416bd2, type: 3}
       propertyPath: m_IsKinematic
       value: 0

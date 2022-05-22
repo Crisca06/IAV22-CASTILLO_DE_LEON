@@ -79,8 +79,8 @@ namespace UCM.IAV.CristianCastillo
             // El destino simplemente poniendo el ratón encima
             dstObj = GetNodeFromScreen(Input.mousePosition);
 
-            // Con la barra espaciadora se activa la búsqueda del camino mínimo
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Con la barra espaciadora se activa la búsqueda del camino mínimo hacia la cabra mas cercana
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 
                 // Si hay ya camino calculado, la muestro en color blanco, y borro la variable con el camino
@@ -111,13 +111,13 @@ namespace UCM.IAV.CristianCastillo
                     jug.AddExitPath(path);
                 }
                
-            }else if (Input.GetKey(KeyCode.Space))
+            }else if (Input.GetKey(KeyCode.C))
             {
                 jug.SetKinematic(true);
                 jug.SetFreeMovement(false);
                 jug.MoveToExit();
 
-            }else if (Input.GetKeyUp(KeyCode.Space))
+            }else if (Input.GetKeyUp(KeyCode.C))
             {
                 jug.SetKinematic(false);
                 jug.SetFreeMovement(true);

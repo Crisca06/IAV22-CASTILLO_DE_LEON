@@ -65,12 +65,9 @@ namespace UCM.IAV.CristianCastillo {
                     matriz[id] = tile.AddComponent<InfluenceTile>();
                     matriz[id].setPosition(i, j);
 
-                    int random = Random.Range(0, 4);
-
                     if (i == numRows - 2 || j == numCols - 2 || i == 1 || j == 1)
-                        matriz[id].influence = 10;
-                    else if (random != 0) matriz[id].influence = graph.getVertexObj(id).GetComponent<Vertex>().coste;
-                    else matriz[id].influence = 1000;
+                        matriz[id].influence = 1000;
+                    else matriz[id].influence = graph.getVertexObj(id).GetComponent<Vertex>().coste;
 
                     matriz[id].name = matriz[id].name.Replace("(Clone)", id.ToString());
                 }
@@ -81,7 +78,7 @@ namespace UCM.IAV.CristianCastillo {
         }
 
         // Update is called once per frame
-        void UpdateInfluence()
+        public void UpdateInfluence()
         {
             foreach (Vertex v in graph.GetVertices()) {
                 if(v.bObstacle)
@@ -91,6 +88,11 @@ namespace UCM.IAV.CristianCastillo {
         bool checkValidCell(int i, int j, ref int id) {
             id = graph.GridToId(j, i);
             return id >= 0; 
+        }
+
+        public InfluenceTile GetInfluenceTile(int id)
+        {
+            return matriz[id];
         }
 
         public bool getInfluenceArea(float fil, float col, int radius) {

@@ -163,7 +163,7 @@ namespace UCM.IAV.CristianCastillo
         {
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
-            demonio.transform.position = n.transform.position;
+            player.transform.position = new Vector3(n.transform.position.x, 0.3f, n.transform.position.z);
             influenceMap.initMap(numRows, numCols, cellSize);
         }
 
@@ -368,7 +368,7 @@ namespace UCM.IAV.CristianCastillo
                     if (id < 0) continue;
                     if (i == fil_ && j == col_) continue;
 
-                    if (vertices[id].coste < 1000) v.Add(vertices[id]);
+                    if (vertices[id].coste < 1000 && vertices[id].bObstacle) v.Add(vertices[id]);
                 }
             }
 
