@@ -9,13 +9,11 @@ namespace UCM.IAV.CristianCastillo
     [RequireComponent(typeof(Rigidbody))]
     public class MovableEnemy : MonoBehaviour
     {
-        public Transform playerDetector;
         public float speed = 10;
         public ParticleSystem particles;
 
         private bool follow;
         private Rigidbody rb;
-        private GameObject target;
         private float timer = 5.0f;
         private bool stop = false;
         private Renderer rend;
@@ -26,6 +24,7 @@ namespace UCM.IAV.CristianCastillo
         public InfluenceMap influenceMap;
         public bool trapped = false;
         public int radius = 3;
+        public Transform player;
 
         /// ------------------------------------------------------- ///
 
@@ -39,13 +38,12 @@ namespace UCM.IAV.CristianCastillo
         void Start()
         {
             rb = GetComponent<Rigidbody>();
-            target = GameObject.FindGameObjectWithTag("Player");
             rend = gameObject.GetComponent<Renderer>();
 
             path = new List<Vertex>();
         }
 
-        public int randomVertex() { return graphGrid.randomVertexWithoutBlood(); }
+        public int randomVertex() { return graphGrid.randomVertexWithoutBlood(influenceMap.getLeastInfluencedZone()); }
 
         public int randomVertexWithinArea() { return graphGrid.randomVertexInArea(transform.position.z, transform.position.x, radius); }
 
@@ -130,7 +128,6 @@ namespace UCM.IAV.CristianCastillo
 
             //Movemos
             transform.Translate(dir * Time.deltaTime);
-            playerDetector.transform.rotation = Quaternion.LookRotation(dir);
 
             if (index == 0) dest = null;
         }
@@ -155,5 +152,7 @@ namespace UCM.IAV.CristianCastillo
             return nextVertex.coste < 1000;
         }
         public void DestNull() { dest = null; }
+
+        public bool detectPlayerNear() { return ((player.position - transform.position).magnitude < 7); }
     }
 }

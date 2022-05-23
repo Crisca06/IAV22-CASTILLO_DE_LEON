@@ -41,14 +41,15 @@ namespace UCM.IAV.CristianCastillo {
             int j; int i; int id;
             j = i = id = 0;
             cellSize = cellS;
+            fils = numRows; cols = numCols;
 
             Vector3 position = Vector3.zero;
-            matriz = new InfluenceTile[numRows * numCols];
+            matriz = new InfluenceTile[fils * cols];
             vertices = graph.GetVertices();
 
-            for (i = 0; i < numRows; i++)
+            for (i = 0; i < fils; i++)
             {
-                for (j = 0; j < numCols; j++)
+                for (j = 0; j < cols; j++)
                 {
                     bool isWall;
 
@@ -93,6 +94,44 @@ namespace UCM.IAV.CristianCastillo {
         public InfluenceTile GetInfluenceTile(int id)
         {
             return matriz[id];
+        }
+        public int getLeastInfluencedZone()
+        {
+            int influenceUpL, influenceUpR, influenceDownL, influenceDownR;
+            influenceUpL = influenceUpR = influenceDownR = influenceDownL = 0;
+
+            int leastInfluenced = 1000000;
+            int zone = 0;
+
+            for(int i = 0; i < fils / 2; i++) {
+                for (int j = 0; j < cols / 2; j++)
+                    if(matriz[graph.GridToId(j, i)])
+                        influenceUpL += matriz[graph.GridToId(j, i)].influence;
+            }
+            if (leastInfluenced > influenceUpL) { leastInfluenced = influenceUpL; zone = 0; }
+
+            for (int i = fils / 2; i < fils; i++) {
+                for (int j = cols / 2; j < cols; j++)
+                    if (matriz[graph.GridToId(j, i)])
+                        influenceDownR += matriz[graph.GridToId(j, i)].influence;
+            }
+            if (leastInfluenced > influenceDownR) { leastInfluenced = influenceDownR; zone = 3; }
+
+            for (int i = 0; i < fils / 2; i++) {
+                for (int j = cols / 2; j < cols; j++)
+                    if (matriz[graph.GridToId(j, i)])
+                        influenceUpR += matriz[graph.GridToId(j, i)].influence;
+            }
+            if (leastInfluenced > influenceUpR) { leastInfluenced = influenceUpR; zone = 1; }
+
+            for (int i = fils / 2; i < fils; i++) {
+                for (int j = 0; j < cols / 2; j++)
+                    if (matriz[graph.GridToId(j, i)])
+                        influenceDownL += matriz[graph.GridToId(j, i)].influence;
+            }
+            if (leastInfluenced > influenceDownL) { leastInfluenced = influenceDownL; zone = 2; }
+
+            return zone;
         }
 
         public bool getInfluenceArea(float fil, float col, int radius) {

@@ -164,7 +164,9 @@ namespace UCM.IAV.CristianCastillo
         {
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
-            player.transform.position = new Vector3(n.transform.position.x, 0.7f, n.transform.position.z);
+            demon.transform.position = new Vector3(n.transform.position.x, 0.7f, n.transform.position.z);
+            Vertex m = GetNearestVertex(1, 1);
+            player.transform.position = new Vector3(m.transform.position.x, 1, m.transform.position.z);
             influenceMap.initMap(numRows, numCols, cellSize);
             moveCamera();
         }
@@ -331,15 +333,38 @@ namespace UCM.IAV.CristianCastillo
             return vertex.id;
         }
 
-        public int randomVertexWithoutBlood()
+        public int randomVertexWithoutBlood(int zone)
         {
             bool manyIterations = false;
             int i = 0;
+            int fil; int col; int filimit; int colimit;
+            fil = col = filimit = colimit = 0;
+
+            int mapVerticesLenght0 = mapVertices.GetLength(0);
+            int mapVerticesLenght1 = mapVertices.GetLength(1);
+
+            switch (zone)
+            {
+                case 0:
+                    fil = 0; col = 0; filimit = mapVerticesLenght0 / 2; colimit = mapVerticesLenght1 / 2;
+                    break;
+                case 1:
+                    fil = 0; col = mapVerticesLenght1 / 2; filimit = mapVertices.GetLength(0) / 2; colimit = mapVertices.GetLength(1) - 1;
+                    break;
+                case 2:
+                    fil = mapVerticesLenght0 / 2; col = 0; filimit = mapVertices.GetLength(0) - 1; colimit = mapVertices.GetLength(1) / 2;
+                    break;
+                case 3:
+                    fil = mapVerticesLenght0 / 2; col = mapVerticesLenght1 / 2; filimit = mapVertices.GetLength(0) - 1; colimit = mapVertices.GetLength(1) - 1;
+                    break;
+                default:
+                    break;
+            }
 
             while (!manyIterations)
             {
-                int x = UnityEngine.Random.Range(0, mapVertices.GetLength(1) - 1);
-                int y = UnityEngine.Random.Range(0, mapVertices.GetLength(0) - 1);
+                int x = UnityEngine.Random.Range(col, colimit);
+                int y = UnityEngine.Random.Range(fil, filimit);
 
                 Vertex v = GetNearestVertex(new Vector3(x, 0, y));
                 if (v.coste < 1000) return v.id;

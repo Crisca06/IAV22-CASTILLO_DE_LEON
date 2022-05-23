@@ -39,6 +39,7 @@ namespace UCM.IAV.CristianCastillo
         //public bool isFinished;
 
         public GameObject player;
+        public GameObject demon;
 
         public virtual void Start()
         {
@@ -194,7 +195,7 @@ namespace UCM.IAV.CristianCastillo
 
             if (!ReferenceEquals(v, dst))
             {
-                Debug.Log("Atrapado");
+                Debug.Log("Stuck");
                 return new List<Vertex>();
             }
 
