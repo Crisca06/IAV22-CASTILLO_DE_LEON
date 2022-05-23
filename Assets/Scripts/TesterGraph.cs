@@ -52,7 +52,7 @@ namespace UCM.IAV.CristianCastillo
         public MovablePlayer jug;
         public MovableEnemy ene;
         public GameObject jugTrans;
-        GameObject exit;
+        public GameObject demon;
 
         // Despertar inicializando esto
         void Awake()
@@ -62,7 +62,6 @@ namespace UCM.IAV.CristianCastillo
             dstObj = null;
             dstEnemy = null;
             path = new List<Vertex>();
-            exit = GameObject.FindGameObjectWithTag("Exit");
 
             Application.runInBackground = true; //para testear con el juego en segundo plano que no hay errores
 
@@ -92,7 +91,7 @@ namespace UCM.IAV.CristianCastillo
                 switch (algorithm)
                 {
                     case TesterGraphAlgorithm.ASTAR:
-                        path = graph.GetPathAstar(jugTrans, exit, null); // Se pasa la heurística
+                        path = graph.GetPathAstar(jugTrans, demon, null); // Se pasa la heurística
                         break;
                     default:
                     case TesterGraphAlgorithm.BFS: 

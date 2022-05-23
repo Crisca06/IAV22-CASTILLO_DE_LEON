@@ -19,6 +19,7 @@ namespace UCM.IAV.CristianCastillo
         private float timer = 5.0f;
         private bool stop = false;
         private Renderer rend;
+        List<Vertex> pathEnemy;
 
         public GraphGrid graphGrid;
         public TesterGraph testerGraph;
@@ -51,20 +52,21 @@ namespace UCM.IAV.CristianCastillo
         public bool destinyIsNull() { return dest == null; }
         public void moveToVertex(int id)
         {
-            if (id == -1) {
-                trapped = true;
-                return;
+            if (pathEnemy != null && pathEnemy.Count > 0) {
+                testerGraph.RecuperaColor(pathEnemy);
             }
          
             GameObject dstEnemy = graphGrid.getVertexObj(id);
-            List<Vertex> pathEnemy = graphGrid.GetPathAstar(this.gameObject, dstEnemy, null);
+            pathEnemy = graphGrid.GetPathAstar(this.gameObject, dstEnemy, null);
 
             int costeTotal = 0;
             foreach (Vertex v in pathEnemy)
                 costeTotal += v.coste;
 
-            if (costeTotal < 1000)
+            if (costeTotal < 1000) {
+                graphGrid.pintaCamino(pathEnemy);
                 AddExitPath(pathEnemy);
+            }
             else dest = null;
         }
 
@@ -99,6 +101,10 @@ namespace UCM.IAV.CristianCastillo
             {
                 Vertex next = path[index];
 
+                if (!checkPathViable(next)) {
+                    dest = null;
+                    return;
+                }
                 //Despintar camino
                 Renderer r = next.GetComponent<Renderer>();
                 r.material.color = next.getColor();
@@ -126,7 +132,7 @@ namespace UCM.IAV.CristianCastillo
             transform.Translate(dir * Time.deltaTime);
             playerDetector.transform.rotation = Quaternion.LookRotation(dir);
 
-            if(index == 0) dest = null;
+            if (index == 0) dest = null;
         }
 
         public void AddExitPath(List<Vertex> exit)
@@ -144,6 +150,10 @@ namespace UCM.IAV.CristianCastillo
             }
         }
 
+        public bool checkPathViable(Vertex nextVertex)
+        {
+            return nextVertex.coste < 1000;
+        }
         public void DestNull() { dest = null; }
     }
 }

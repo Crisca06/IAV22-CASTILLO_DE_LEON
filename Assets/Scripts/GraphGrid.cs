@@ -164,7 +164,7 @@ namespace UCM.IAV.CristianCastillo
         {
             LoadMap(mapName);
             Vertex n = GetNearestVertex(numCols / 2, numRows / 2);
-            player.transform.position = new Vector3(n.transform.position.x, 0.3f, n.transform.position.z);
+            player.transform.position = new Vector3(n.transform.position.x, 0.7f, n.transform.position.z);
             influenceMap.initMap(numRows, numCols, cellSize);
             moveCamera();
         }
