@@ -1,11 +1,12 @@
 # IAV 2022 - Cristian Castillo de León - Proyecto Final
 ### Esta es la documentación para el proyecto final de la asignatura de Inteligencia Artificial para Videojuegos del curso 2021/2022.
 
-[EJECUTABLE FINAL DE PROYECTO](https://github.com/Crisca06/IAV22-CASTILLO_DE_LEON/releases/tag/IAV22-CASTILLO_DE_LEON_RELEASE)
+[EJECUTABLE FINAL DE PROYECTO](https://github.com/Crisca06/IAV22-CASTILLO_DE_LEON/releases/tag/IAV22-CASTILLO_DE_LEON_RELEASE)/
+[ENLACE AL VIDEO DEL PROYECTO](https://youtu.be/Zb59oLYRk5g)
 
 ## Introducción al Proyecto
-El proyecto final se centra principalmente en un pequeño juego del género de terror y mazmorras, con generación aleatoria de las mismas.
-La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las 7 cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán merodear por la zona hasta encontrarse con el jugador, entonces le darán su sangre, para lograr todo este comportamiento se hará uso de una máquina de estados. La sangre servirá para manchar la mazmorra, impidiendo al demonio pasar por dichas zonas. Si dicho demonio llegara a ser encerrado en un circulo o cuadrado de sangre, entonces habrá perdido.
+El proyecto final se centra principalmente en un pequeño juego del género de terror y mazmorras.
+La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán merodear por la zona hasta encontrarse con el jugador, entonces le darán su sangre, para lograr todo este comportamiento se hará uso de una máquina de estados. La sangre servirá para manchar la mazmorra, impidiendo al demonio pasar por dichas zonas. Si dicho demonio llegara a ser encerrado en un circulo o cuadrado de sangre, entonces habrá perdido.
 
 En un principio el demonio únicamente divagará por la mazmorra ignorando al jugador pero si éste comienza a sacrificar la sangre de las cabras, se dará cuenta de lo que está intentando el jugador y comenzará a alejarse de la zona, evitando así ser atrapado.
 
