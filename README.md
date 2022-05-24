@@ -249,9 +249,9 @@ Por lo tanto, el demonio tendrá una máquina de estados que le permitirá cambi
 
 Los distintos estados del demonio serán:
 
-- Merodeo: El demonio se moverá entre casillas que se encuentren con un bajo nivel de influencia de la sangre y deambulará por el escenario hasta detectar sangre a su alrededor. Si hay sangre pero el jugador no se encuentra cerca seguirá merodeando ya que no hay riesgo de que lo atrapen.
+- Merodeo: El demonio se moverá entre casillas que se encuentren con un bajo nivel de influencia de la sangre y deambulará por el escenario hasta detectar sangre a su alrededor. Si hay sangre pero el jugador no se encuentra cerca seguirá merodeando ya que no hay riesgo de que lo atrapen. El merodeo normalmente será corto, yendo a casillas no muy lejanas, pero no siempre será así, también recorrerá largas distancias dependiendo del mapa en el que se encuentre.
 
-- Huida: El demonio buscará una zona alejada que se encuentre libre de influencia de sangre, huyendo y esquivando así el ser atrapado.
+- Huida: El demonio buscará una zona alejada que se encuentre libre de influencia de sangre, huyendo y esquivando así el ser atrapado. Las zonas alejadas que encuentre serán principalmente dadas por el mapa de influencia, que le indicará qué parte del mapa tiene menos influencia en el escenario. Una vez encontrada la zona, eligirá una casilla de dicha zona a la que dirigirse.
 
 - Atrapado: El demonio al ser atrapado activará su sistema de partículas y enviará la información de que ha ganado el jugador.
 
@@ -259,6 +259,13 @@ Los distintos estados del demonio serán:
 
 Serán personajes con una máquina de estados simple basada en el merodeo y el hecho de haber interactuado con el jugador.
 Dejarán su sangre para que el jugador pueda pintar por el mapa.
+El merodeo de las cabras será un merodeo limitado en una zona en concreta dependiendo de la posición en la que se crean y un radio. Las cabras sólo se moverán por las casillas contenidas en ese radio y esa posición.
+
+## Jugador
+
+Se moverá principalmente con WASD o las flechas del teclado. Para colocar sangre en el escenario pulsará Espacio en la casilla que no tenga y siempre necesitará tener sangre para colocarla por lo que el jugador tendrá que buscar cabras en el mapa.
+Si el jugador pulsa C entonces realizará un A* automático hacia la posición del demonio para hacer más amena la búsqueda.
+En caso de no tener sangre ni cabras en el escenario, el jugador habrá perdido.
 
 ## Funcionalidades
 
