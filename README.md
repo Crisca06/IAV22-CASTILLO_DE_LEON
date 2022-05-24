@@ -9,6 +9,12 @@ En un principio el demonio únicamente divagará por la mazmorra ignorando al ju
 
 En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un generador que permita recrear una mazmorra con cabras colocadas aleatoriamente.
 
+## Vista General
+
+<p float="left">
+  <img src="Documentos/imagen.png" /> 
+</p>
+
 ## Planteamiento
 
 ## Demonio
