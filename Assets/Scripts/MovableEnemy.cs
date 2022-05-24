@@ -18,11 +18,12 @@ namespace UCM.IAV.CristianCastillo
         private bool stop = false;
         private Renderer rend;
         List<Vertex> pathEnemy;
+        private int tries = 0;
+        private bool trapped = false;
 
         public GraphGrid graphGrid;
         public TesterGraph testerGraph;
         public InfluenceMap influenceMap;
-        public bool trapped = false;
         public int radius = 3;
         public Transform player;
 
@@ -39,7 +40,7 @@ namespace UCM.IAV.CristianCastillo
         {
             rb = GetComponent<Rigidbody>();
             rend = gameObject.GetComponent<Renderer>();
-
+            particles = gameObject.GetComponent<ParticleSystem>();
             path = new List<Vertex>();
         }
 
@@ -61,15 +62,20 @@ namespace UCM.IAV.CristianCastillo
             foreach (Vertex v in pathEnemy)
                 costeTotal += v.coste;
 
-            if (costeTotal < 1000) {
+            if (costeTotal < 1000)
+            {
                 graphGrid.pintaCamino(pathEnemy, Color.yellow);
+
+                if(pathEnemy.Count > radius * 2)
+                tries = 0;
+
                 AddExitPath(pathEnemy);
             }
-            else dest = null;
+            else { dest = null; tries++; }
         }
 
         private void Update()
-        { }
+        { if (tries > 200) trapped = true; }
 
         public void setFollow(bool fol)
         {
@@ -152,6 +158,12 @@ namespace UCM.IAV.CristianCastillo
             return nextVertex.coste < 1000;
         }
         public void DestNull() { dest = null; }
+
+        public bool isTrapped() { return trapped; }
+
+        public void playParticles() { particles.Play(); }
+
+        public void playerWin() { player.gameObject.GetComponent<InfluencePlayer>().Win(); }
 
         public bool detectPlayerNear() { return ((player.position - transform.position).magnitude < 7); }
     }

@@ -129,8 +129,11 @@ namespace UCM.IAV.CristianCastillo
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player")
+            if (other.tag == "Player") {
                 picked = true;
+                other.GetComponent<InfluencePlayer>().addBlood();
+                graphGrid.numOfSheeps--;
+            }
         }
     }
 }
