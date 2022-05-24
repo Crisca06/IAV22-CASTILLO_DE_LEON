@@ -259,12 +259,12 @@ Dejarán su sangre para que el jugador pueda pintar por el mapa.
 
 ## Funcionalidades
 
-# A. Correcto funcionamiento del merodeo del Demonio
-# B. Correcto funcionamiento del merodeo de las cabras en una zona limitada
-# C. Huida del demonio hacia zonas con poca sangre
-# D. Interacción del jugador con las cabras para obtener sangre y colocar sangre en el mapa
-# E. Correcto funcionamiento del mapa de influencia
-# F. Victoria y Derrota (El demonio ha sido atrapado o el jugador se ha quedado sin sangre)
+### A. Correcto funcionamiento del merodeo del Demonio
+### B. Correcto funcionamiento del merodeo de las cabras en una zona limitada
+### C. Huida del demonio hacia zonas con poca sangre
+### D. Interacción del jugador con las cabras para obtener sangre y colocar sangre en el mapa
+### E. Correcto funcionamiento del mapa de influencia
+### F. Victoria y Derrota (El demonio ha sido atrapado o el jugador se ha quedado sin sangre)
 
 Todo el movimiento de las IAs se realizará con A*. 
 Se utilizará la versión de Unity de Bolt (llamada Visual Scripting) para la creación de las máquinas de estados. La importación de Bolt produce muchos problemas y la versión creada por Unity es prácticamente la misma.
