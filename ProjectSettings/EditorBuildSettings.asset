@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GraphGrid 2.unity
     guid: dfd3c62d714942d4a84937eedfb20d97
+  - enabled: 1
+    path: Assets/Scenes/GraphGrid 3.unity
+    guid: d539ed092eadb6a409367c957963c92f
   m_configObjects: {}

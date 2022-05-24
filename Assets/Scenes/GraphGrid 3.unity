@@ -707,7 +707,7 @@ MonoBehaviour:
   mapName: mapa2.map
   get8Vicinity: 0
   cellSize: 1
-  numOfSheeps: 4
+  numOfSheeps: 2
   defaultCost: 1
   maximumCost: Infinity
   salida: {fileID: 0}

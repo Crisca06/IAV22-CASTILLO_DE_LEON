@@ -29,12 +29,11 @@ public class SceneSelector : MonoBehaviour
                     break;
                 case "2":
                     SceneManager.LoadScene(2);
+                    break;             
+                case "3":
+                    SceneManager.LoadScene(3);
                     break;
                 default:
-                    //int number;
-                    //if(!int.TryParse(key, out number)) return;
-                    //if (number < 0 || number > 9) return;
-                    //SceneManager.LoadScene("Hamelin "+number);
                     break;
             }
         }
