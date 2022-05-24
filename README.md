@@ -1,7 +1,7 @@
 # IAV 2022 - Cristian Castillo de León - Proyecto Final
 ### Esta es la documentación para el proyecto final de la asignatura de Inteligencia Artificial para Videojuegos del curso 2021/2022.
 
-[EJECUTABLE FINAL DE PROYECTO](https://github.com/Crisca06/IAV22-CASTILLO_DE_LEON/releases/tag/IAV22-CASTILLO_DE_LEON_RELEASE)/
+[EJECUTABLE FINAL DE PROYECTO](https://github.com/Crisca06/IAV22-CASTILLO_DE_LEON/releases/tag/IAV22-CASTILLO_DE_LEON_RELEASE)\
 [ENLACE AL VIDEO DEL PROYECTO](https://youtu.be/Zb59oLYRk5g)
 
 ## Introducción al Proyecto
