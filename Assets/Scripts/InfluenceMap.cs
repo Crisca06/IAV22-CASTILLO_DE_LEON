@@ -55,7 +55,7 @@ namespace UCM.IAV.CristianCastillo {
 
                     position.x = j * cellSize;
                     position.z = i * cellSize;
-                    position.y = 1.25f;
+                    position.y = 0.1f;
 
                     id = graph.GridToId(j, i);
                     isWall = graph.isWall(i, j);

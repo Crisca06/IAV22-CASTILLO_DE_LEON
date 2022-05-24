@@ -45,7 +45,7 @@ namespace UCM.IAV.CristianCastillo
 
         public int randomVertex() { return graphGrid.randomVertexWithoutBlood(influenceMap.getLeastInfluencedZone()); }
 
-        public int randomVertexWithinArea() { return graphGrid.randomVertexInArea(transform.position.z, transform.position.x, radius); }
+        public int randomVertexWithinArea() { return graphGrid.randomVertexInArea(transform.position.z, transform.position.x, radius, true); }
 
         public bool destinyIsNull() { return dest == null; }
         public void moveToVertex(int id)
@@ -62,7 +62,7 @@ namespace UCM.IAV.CristianCastillo
                 costeTotal += v.coste;
 
             if (costeTotal < 1000) {
-                graphGrid.pintaCamino(pathEnemy);
+                graphGrid.pintaCamino(pathEnemy, Color.yellow);
                 AddExitPath(pathEnemy);
             }
             else dest = null;

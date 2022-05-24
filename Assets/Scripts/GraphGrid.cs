@@ -29,6 +29,7 @@ namespace UCM.IAV.CristianCastillo
         public string mapName = "arena.map"; // Fichero por defecto
         public bool get8Vicinity = false;
         public float cellSize = 1f;
+        public int numOfSheeps = 1;
         [Range(0, Mathf.Infinity)]
         public float defaultCost = 1f;
         [Range(0, Mathf.Infinity)]
@@ -41,6 +42,7 @@ namespace UCM.IAV.CristianCastillo
         public GameObject salida;
         public InfluenceMap influenceMap;
         public Camera mainCam;
+        public GameObject sheep;
 
         public int GridToId(int x, int y)
         {
@@ -167,6 +169,20 @@ namespace UCM.IAV.CristianCastillo
             demon.transform.position = new Vector3(n.transform.position.x, 0.7f, n.transform.position.z);
             Vertex m = GetNearestVertex(1, 1);
             player.transform.position = new Vector3(m.transform.position.x, 1, m.transform.position.z);
+
+            for(int i = 0; i < numOfSheeps; i++)
+            {
+                int randomX = UnityEngine.Random.Range(0, numCols);
+                int randomZ = UnityEngine.Random.Range(0, numRows);
+
+                Vertex v = GetNearestVertex(randomX, randomZ);
+
+                Vector3 pos = v.transform.position;
+                pos.y = 1;
+
+                Instantiate(sheep, pos, Quaternion.identity, this.transform);
+            }
+
             influenceMap.initMap(numRows, numCols, cellSize);
             moveCamera();
         }
@@ -302,13 +318,13 @@ namespace UCM.IAV.CristianCastillo
             return aux; //newPath;
         }
 
-        public void pintaCamino(List<Vertex> path)
+        public void pintaCamino(List<Vertex> path, Color color)
         {
 
             for (int i = 0; i < path.Count; i++)
             {   
                 Renderer r = vertexObjs[path[i].id].GetComponent<Renderer>();
-                r.material.color = Color.yellow;
+                r.material.color = color;
             }
             
         }
@@ -380,7 +396,7 @@ namespace UCM.IAV.CristianCastillo
             return -1;
         }
 
-        public int randomVertexInArea(float fil, float col, int radius)
+        public int randomVertexInArea(float fil, float col, int radius, bool blood)
         {
             int fil_ = roundFloat(fil);
             int col_ = roundFloat(col);
@@ -395,7 +411,7 @@ namespace UCM.IAV.CristianCastillo
                     if (id < 0) continue;
                     if (i == fil_ && j == col_) continue;
 
-                    if (vertices[id].coste < 1000 && vertices[id].bObstacle) v.Add(vertices[id]);
+                    if ((!blood && vertices[id].bObstacle) || (vertices[id].coste < 1000 && vertices[id].bObstacle)) v.Add(vertices[id]);
                 }
             }
 

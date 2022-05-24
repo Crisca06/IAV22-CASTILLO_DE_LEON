@@ -106,7 +106,7 @@ namespace UCM.IAV.CristianCastillo
 
                 if(path.Count != 0)
                 {
-                    graph.pintaCamino(path);  
+                    graph.pintaCamino(path, Color.blue);  
                     jug.AddExitPath(path);
                 }
                
