@@ -3,12 +3,11 @@
 
 ## Introducción al Proyecto
 El proyecto final se centra principalmente en un pequeño juego del género de terror y mazmorras, con generación aleatoria de las mismas.
-La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las 7 cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán seguir al jugador en caso de que éste le dé de comer, una vez ganada su confianza, la cabra seguirá al jugador mientras lo vea, pero huirá en caso de encontrarse cerca el demonio durante demasiado tiempo, para lograr todo este comportamiento se hará uso de una máquina de estados. Las cabras seguirán al jugador y éstas sacrificarán su sangre para manchar la mazmorra, impidiendo al demonio pasar por dichas zonas. Si dicho demonio llegara a ser encerrado en un circulo o cuadrado de sangre, entonces habrá perdido.
+La historia se basa en un demonio aterrador que se encuentra en una mazmorra a punto de obtener un poder prohibido, el protagonista se adentra en dicha mazmorra y debe encontrar las 7 cabras del sacrificio para poder detener al demonio. Las cabras se encontrarán repartidas de forma aleatoria por la mazmorra y solo podrán merodear por la zona hasta encontrarse con el jugador, entonces le darán su sangre, para lograr todo este comportamiento se hará uso de una máquina de estados. La sangre servirá para manchar la mazmorra, impidiendo al demonio pasar por dichas zonas. Si dicho demonio llegara a ser encerrado en un circulo o cuadrado de sangre, entonces habrá perdido.
 
 En un principio el demonio únicamente divagará por la mazmorra ignorando al jugador pero si éste comienza a sacrificar la sangre de las cabras, se dará cuenta de lo que está intentando el jugador y comenzará a alejarse de la zona, evitando así ser atrapado.
 
-Se tiene pensado incluir un desplazamiento en bandada a la hora de juntarse las cabras persiguiendo al jugador.
-En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un generador que permita recrear una mazmorra con cabras y comida colocadas aleatoriamente.
+En cuanto a la generación aleatoria de las mazmorras, se tiene pensado crear un generador que permita recrear una mazmorra con cabras colocadas aleatoriamente.
 
 ## Planteamiento
 
@@ -241,16 +240,28 @@ Por lo tanto, el demonio tendrá una máquina de estados que le permitirá cambi
 
 Los distintos estados del demonio serán:
 
-- Merodeo: El demonio se moverá entre casillas que se encuentren con un bajo nivel de influencia de la sangre y deambulará por el escenario hasta detectar sangre a su alrededor.
+- Merodeo: El demonio se moverá entre casillas que se encuentren con un bajo nivel de influencia de la sangre y deambulará por el escenario hasta detectar sangre a su alrededor. Si hay sangre pero el jugador no se encuentra cerca seguirá merodeando ya que no hay riesgo de que lo atrapen.
 
 - Huida: El demonio buscará una zona alejada que se encuentre libre de influencia de sangre, huyendo y esquivando así el ser atrapado.
 
-- Atacando: Si el jugador tarda mucho en encerrar al demonio, éste se hará lo suficientemente poderoso para ignorar la sangre y perseguirá al jugador, venciéndolo y poniendo fin a la partida.
+- Atrapado: El demonio al ser atrapado activará su sistema de partículas y enviará la información de que ha ganado el jugador.
 
 ## Cabras
 
-Serán personajes con una máquina de estados simple basada principalmente en si le ha dado de comer el jugador o no, si no le ha dado de comer entonces lo ignorarán y en caso de que reciban comida lo perseguirán y confiarán en él hasta la muerte.
-Dejarán su sangre por el mapa permitirán encerrar al demonio.
+Serán personajes con una máquina de estados simple basada en el merodeo y el hecho de haber interactuado con el jugador.
+Dejarán su sangre para que el jugador pueda pintar por el mapa.
+
+## Funcionalidades
+
+# A. Correcto funcionamiento del merodeo del Demonio
+# B. Correcto funcionamiento del merodeo de las cabras en una zona limitada
+# C. Huida del demonio hacia zonas con poca sangre
+# D. Interacción del jugador con las cabras para obtener sangre y colocar sangre en el mapa
+# E. Correcto funcionamiento del mapa de influencia
+# F. Victoria y Derrota (El demonio ha sido atrapado o el jugador se ha quedado sin sangre)
+
+Todo el movimiento de las IAs se realizará con A*. 
+Se utilizará la versión de Unity de Bolt (llamada Visual Scripting) para la creación de las máquinas de estados. La importación de Bolt produce muchos problemas y la versión creada por Unity es prácticamente la misma.
 
 ## Bibliografía
 
