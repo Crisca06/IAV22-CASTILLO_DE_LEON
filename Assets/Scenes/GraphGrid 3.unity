@@ -704,7 +704,7 @@ MonoBehaviour:
   demon: {fileID: 919132148112409767}
   obstaclePrefab: {fileID: 100000, guid: 403c7d1fcaa50ea4e8acd406751a88fd, type: 3}
   mapsDir: Maps
-  mapName: test.map
+  mapName: mapa2.map
   get8Vicinity: 0
   cellSize: 1
   numOfSheeps: 4

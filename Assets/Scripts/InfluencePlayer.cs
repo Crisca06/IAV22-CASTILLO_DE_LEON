@@ -14,8 +14,10 @@ namespace UCM.IAV.CristianCastillo
         public Text text;
         public int numOfSheeps;
 
+        private ParticleSystem pSys;
         bool win = false;
         bool lose = false;
+        bool played = false;
 
         // Update is called once per frame
         void Update()
@@ -38,12 +40,16 @@ namespace UCM.IAV.CristianCastillo
 
             Lose();
 
-            text.text = "R = Reiniciar | Espacio = Colocar Sangre | C = Perseguir Demonio | Sangre = " + bloodAmount;
-
             if(win) text.text = "R = Reiniciar | Espacio = Colocar Sangre | C = Perseguir Demonio | Sangre = " + bloodAmount + "\nVICTORIA";
-            if(lose) text.text = "R = Reiniciar | Espacio = Colocar Sangre | C = Perseguir Demonio | Sangre = " + bloodAmount + "\nDERROTA";
+            else text.text = "R = Reiniciar | Espacio = Colocar Sangre | C = Perseguir Demonio | Sangre = " + bloodAmount + "\nTeclas para Cambio de Escena: 0 1 2 3";
+            if (lose) text.text = "R = Reiniciar | Espacio = Colocar Sangre | C = Perseguir Demonio | Sangre = " + bloodAmount + "\nDERROTA";
+            if(lose && !played) { pSys.Play(); played = true; }
         }
         public void addBlood() { bloodAmount += 10; }
+        private void Start()
+        {
+            pSys = gameObject.GetComponent<ParticleSystem>();
+        }
 
         public void Win() { win = true; }
         public void Lose() { if(!win && bloodAmount <= 0 && numOfSheeps <= 0) lose = true; }

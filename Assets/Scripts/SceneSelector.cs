@@ -18,7 +18,7 @@ public class SceneSelector : MonoBehaviour
                 case "r":
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     break;
-                case "s":
+                case "z":
                     testergraph.smoothPath = !testergraph.smoothPath;
                     break;
                 case "0":
